@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guoshang.basepay.mapper.TUserMapper">
+    <resultMap id="tUserMap" type="com.guoshang.basepay.entity.TUser">
+        <id property="id" column="id"></id>
+        <id property="name" column="name"></id>
+        <id property="age" column="age"></id>
+    </resultMap>
+    <select id="findAllTUser" resultMap="tUserMap">
+        select * from t_user
+    </select>
+</mapper>

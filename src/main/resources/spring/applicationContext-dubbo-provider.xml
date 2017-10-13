@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+       http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+   <!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:basepayproperties/zkpro.properties</value>
+            </list>
+        </property>
+    </bean>-->
+
+    <context:property-placeholder location="classpath*:basepayproperties/zkpro.properties"/>
+    <dubbo:consumer check="false"/>
+    <!--提供方的应用信息   用于计算依赖-->
+    <dubbo:application name="base-thired-pay-provider"/>
+
+    <dubbo:provider filter="accessFilter" delay="-1" retries="0"></dubbo:provider>
+    <!--<dubbo:registry address="multicast://224.5.6.7:1234"/>-->
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"/>
+    <dubbo:protocol name="dubbo" port="20880"/>
+    <dubbo:service interface="com.guoshang.basepay.dubbo.service.BaseThirdPayDubboService" ref="baseThirdPayDubboService"/>
+    <bean id="baseThirdPayDubboService" class="com.guoshang.basepay.dubbo.service.impl.BaseThirdPayDubboServiceImpl"/>
+</beans>
